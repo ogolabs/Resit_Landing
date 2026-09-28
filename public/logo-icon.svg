@@ -1,0 +1,23 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Mask for clean transparent negative-space gap at ribbon crossover -->
+    <mask id="ribbon-gap">
+      <rect width="256" height="256" fill="#FFFFFF"/>
+      <!-- Cutout gap where the Blue ribbon passes over the Emerald ribbon -->
+      <path d="M108 104 L148 152" stroke="#000000" stroke-width="40" stroke-linecap="round"/>
+    </mask>
+  </defs>
+
+  <!-- Right Loop: Receipt Emerald (#10B981) with transparent crossover gap -->
+  <path d="M128 128 C148 154 168 174 198 174 C228 174 244 154 244 128 C244 102 228 82 198 82 C168 82 148 102 128 128" 
+        stroke="#10B981" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"
+        mask="url(#ribbon-gap)"/>
+
+  <!-- Left Loop & Over-passing Ribbon: Electric Brand Blue (#2563EB) -->
+  <path d="M128 128 C108 102 88 82 58 82 C28 82 12 102 12 128 C12 154 28 174 58 174 C88 174 108 154 128 128 L144 148" 
+        stroke="#2563EB" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Twin Precision Nodes (Transparent-Safe Core Data Points) -->
+  <circle cx="58" cy="128" r="8" fill="#2563EB"/>
+  <circle cx="198" cy="128" r="8" fill="#10B981"/>
+</svg>
