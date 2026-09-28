@@ -12,11 +12,11 @@ export const sharedOpenGraph = {
   type: "website",
 };
 
+import { LANDING_BASE_URL } from "./config";
+
 export function getMetadataBaseUrl(): URL {
-  const raw = (process.env.NEXT_PUBLIC_APP_URL || "https://resit.xyz").trim();
-  const formatted = raw.startsWith("http://") || raw.startsWith("https://") ? raw : `https://${raw}`;
   try {
-    return new URL(formatted);
+    return new URL(LANDING_BASE_URL);
   } catch {
     return new URL("https://resit.xyz");
   }
