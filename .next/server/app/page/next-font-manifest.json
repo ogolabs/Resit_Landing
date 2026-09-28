@@ -1,0 +1,8 @@
+{
+  "pages": {},
+  "app": {
+    "[project]/landing/app/page": []
+  },
+  "appUsingSizeAdjust": true,
+  "pagesUsingSizeAdjust": false
+}

@@ -1,0 +1,9 @@
+{
+  "app": {
+    "[project]/landing/app/_not-found/page": [],
+    "[project]/landing/app/page": []
+  },
+  "appUsingSizeAdjust": true,
+  "pages": {},
+  "pagesUsingSizeAdjust": false
+}
