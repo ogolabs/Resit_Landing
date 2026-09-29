@@ -471,7 +471,7 @@ export default function PricingPage() {
             <div className="flex items-start sm:items-center gap-2.5">
               <ShieldCheck className="w-5 h-5 xl:w-7 xl:h-7 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5 sm:mt-0" />
               <h2 className="text-base sm:text-xl xl:text-2xl 2xl:text-3xl font-bold font-display">
-                Universal {convertNgnPrice(OVERAGE_FEE_NGN, userCurrency).formattedLocal} Overage &amp; Predictable Monthly Billing
+                Universal {convertNgnPrice(OVERAGE_FEE_NGN, userCurrency).formattedLocal} &nbsp; Overage &amp; Predictable Monthly Billing
               </h2>
             </div>
             <p className="text-xs sm:text-sm xl:text-base 2xl:text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-4xl xl:max-w-5xl">
