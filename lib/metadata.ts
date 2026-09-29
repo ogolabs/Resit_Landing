@@ -18,6 +18,6 @@ export function getMetadataBaseUrl(): URL {
   try {
     return new URL(LANDING_BASE_URL);
   } catch {
-    return new URL("https://resit.xyz");
+    return new URL("https://app-resit.vercel.app");
   }
 }
