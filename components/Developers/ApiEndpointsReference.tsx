@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Server, Code, Copy, Check, Key } from "lucide-react";
 import { codeExamples, SupportedLang } from "./codeSnippets";
+import { NETWORK_NAME } from "@/lib/config";
 
 export default function ApiEndpointsReference() {
   const [activeLang, setActiveLang] = useState<SupportedLang>("curl");
@@ -418,7 +419,7 @@ export default function ApiEndpointsReference() {
           </div>
 
           <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-            Returns the real-time operational status of the REST API, MongoDB connection, Electroneum mainnet chain
+            Returns the real-time operational status of the REST API, MongoDB connection, {NETWORK_NAME} chain
             configuration, backend relayer configuration status, and system response latency (in ms).
           </p>
 

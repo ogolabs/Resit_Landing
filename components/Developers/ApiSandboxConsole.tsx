@@ -223,7 +223,8 @@ export default function ApiSandboxConsole() {
         method = "GET";
       }
 
-      const res = await fetch(url, {
+      const targetUrl = `${APP_BASE_URL}${url}`;
+      const res = await fetch(targetUrl, {
         method,
         headers,
         body: method === "GET" ? undefined : bodyData,

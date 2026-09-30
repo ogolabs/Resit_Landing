@@ -9,8 +9,9 @@ import {
   Globe2,
   Terminal,
   Store,
+  ExternalLink,
 } from "lucide-react";
-import { APP_BASE_URL } from "@/lib/config";
+import { APP_BASE_URL, isTestnet, NETWORK_NAME, BLOCK_EXPLORER_URL } from "@/lib/config";
 
 export default function Footer() {
   return (
@@ -36,7 +37,9 @@ export default function Footer() {
           <div className="flex items-center flex-wrap gap-2.5 sm:gap-3 text-xs">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 font-medium">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-              <span className="font-mono text-[11px]">Mainnet Operational</span>
+              <span className="font-mono text-[11px]">
+                {isTestnet ? "Testnet Operational" : "Mainnet Operational"}
+              </span>
             </div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 font-medium">
               <Zap className="w-3.5 h-3.5 text-blue-500" />
@@ -175,9 +178,15 @@ export default function Footer() {
                   <span className="text-slate-400 dark:text-slate-500 block text-[9px] uppercase font-bold tracking-wider font-mono">
                     Underlying Settlement
                   </span>
-                  <span className="font-bold text-slate-900 dark:text-white text-xs">
-                    Electroneum Mainnet
-                  </span>
+                  <a
+                    href={BLOCK_EXPLORER_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-bold text-slate-900 dark:text-white text-xs hover:text-blue-600 dark:hover:text-blue-400 hover:underline transition-colors inline-flex items-center gap-1 group/link"
+                  >
+                    <span>{NETWORK_NAME}</span>
+                    <ExternalLink className="w-3 h-3 text-slate-400 group-hover/link:text-blue-500 shrink-0" />
+                  </a>
                 </div>
               </div>
               <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">
