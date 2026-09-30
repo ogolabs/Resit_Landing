@@ -47,8 +47,8 @@ export default function Header() {
                 <Image
                   src="/logo-full.svg"
                   alt="Resit Logo"
-                  width={160}
-                  height={44}
+                  width={460}
+                  height={90}
                   style={{ width: "auto" }}
                   className="h-8 sm:h-9 lg:h-10 xl:h-11 2xl:h-12 w-auto shrink-0 hidden sm:block object-contain"
                   priority

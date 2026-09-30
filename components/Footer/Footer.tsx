@@ -24,8 +24,8 @@ export default function Footer() {
               <Image
                 src="/logo-full.svg"
                 alt="Resit Logo"
-                width={160}
-                height={44}
+                width={460}
+                height={90}
                 style={{ width: "auto" }}
                 className="h-8 sm:h-9 lg:h-10 xl:h-11 2xl:h-12 w-auto object-contain shrink-0 group-hover:scale-105 transition-transform"
               />
