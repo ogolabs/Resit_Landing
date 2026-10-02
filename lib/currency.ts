@@ -298,13 +298,19 @@ export const PLAN_TIERS: Record<string, PlanTierConfig> = {
   },
 };
 
-export const OVERAGE_FEE_NGN = 1; // ₦1 per extra dispatch, receipt, branch, sales rep in Nigeria
-export const OVERAGE_FEE_USD = 0.003; // $0.003 per extra dispatch, receipt, branch, sales rep for non-Nigeria
+export const OPERATIONS_OVERAGE_FEE_NGN = 1; // ₦1 per extra dispatch or digital receipt in Nigeria
+export const OPERATIONS_OVERAGE_FEE_USD = 0.003; // $0.003 per extra dispatch or digital receipt for non-Nigeria
+
+export const BRANCH_STAFF_OVERAGE_FEE_NGN = 10; // ₦10 per extra branch or sales rep in Nigeria
+export const BRANCH_STAFF_OVERAGE_FEE_USD = 0.1; // $0.10 per extra branch or sales rep for non-Nigeria
+
+export const OVERAGE_FEE_NGN = OPERATIONS_OVERAGE_FEE_NGN;
+export const OVERAGE_FEE_USD = OPERATIONS_OVERAGE_FEE_USD;
 
 /**
  * Converts a base NGN amount to the user's detected local currency.
  * If user is in Nigeria, returns exact NGN without foreign exchange.
- * If user is outside Nigeria, applies 3x tier multiplier, or $0.003 for overage fee.
+ * If user is outside Nigeria, applies 3x tier multiplier, or fixed rates for overage fees.
  * Single currency format strictly enforced (e.g. "₦500" or "$1.05").
  */
 export function convertNgnPrice(ngnAmount: number, currencyInfo?: UserCurrencyInfo | null): ConvertedPrice {
@@ -324,15 +330,35 @@ export function convertNgnPrice(ngnAmount: number, currencyInfo?: UserCurrencyIn
     };
   }
 
-  // Universal overage for non-Nigeria is fixed at $0.003
-  if (ngnAmount === OVERAGE_FEE_NGN) {
-    const usdAmount = OVERAGE_FEE_USD;
+  // Operations overage for non-Nigeria is fixed at $0.003
+  if (ngnAmount === OPERATIONS_OVERAGE_FEE_NGN) {
+    const usdAmount = OPERATIONS_OVERAGE_FEE_USD;
     const rawLocal = usdAmount * info.rateAgainstUSD;
     const formattedAmount = info.currency === "USD" 
       ? "0.003"
       : rawLocal.toLocaleString(undefined, {
           minimumFractionDigits: 3,
           maximumFractionDigits: 4,
+        });
+
+    return {
+      usdAmount,
+      localAmount: rawLocal,
+      formattedLocal: `${info.symbol}${formattedAmount}`,
+      symbol: info.symbol,
+      currency: info.currency,
+    };
+  }
+
+  // Branch & staff overage for non-Nigeria is fixed at $0.10
+  if (ngnAmount === BRANCH_STAFF_OVERAGE_FEE_NGN) {
+    const usdAmount = BRANCH_STAFF_OVERAGE_FEE_USD;
+    const rawLocal = usdAmount * info.rateAgainstUSD;
+    const formattedAmount = info.currency === "USD" 
+      ? "0.10"
+      : rawLocal.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
         });
 
     return {
@@ -363,8 +389,16 @@ export function convertNgnPrice(ngnAmount: number, currencyInfo?: UserCurrencyIn
   };
 }
 
+export function getOperationsOverageFee(currencyInfo?: UserCurrencyInfo | null): ConvertedPrice {
+  return convertNgnPrice(OPERATIONS_OVERAGE_FEE_NGN, currencyInfo);
+}
+
+export function getBranchStaffOverageFee(currencyInfo?: UserCurrencyInfo | null): ConvertedPrice {
+  return convertNgnPrice(BRANCH_STAFF_OVERAGE_FEE_NGN, currencyInfo);
+}
+
 export function getOverageFee(currencyInfo?: UserCurrencyInfo | null): ConvertedPrice {
-  return convertNgnPrice(OVERAGE_FEE_NGN, currencyInfo);
+  return getOperationsOverageFee(currencyInfo);
 }
 
 /**

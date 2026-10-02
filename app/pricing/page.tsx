@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import { HelpCircle, ShieldCheck, Zap, Check } from "lucide-react";
-import { detectUserCurrency, convertNgnPrice, UserCurrencyInfo, PLAN_TIERS, OVERAGE_FEE_NGN } from "@/lib/currency";
+import { detectUserCurrency, convertNgnPrice, UserCurrencyInfo, PLAN_TIERS, OPERATIONS_OVERAGE_FEE_NGN, BRANCH_STAFF_OVERAGE_FEE_NGN } from "@/lib/currency";
 import { APP_BASE_URL } from "@/lib/config";
 
 export default function PricingPage() {
@@ -17,7 +17,8 @@ export default function PricingPage() {
   }, []);
 
   const isNigeria = userCurrency?.currency === "NGN" || userCurrency?.countryCode === "NG";
-  const overageFeeFormatted = convertNgnPrice(OVERAGE_FEE_NGN, userCurrency).formattedLocal;
+  const opsOverageFeeFormatted = convertNgnPrice(OPERATIONS_OVERAGE_FEE_NGN, userCurrency).formattedLocal;
+  const branchStaffOverageFeeFormatted = convertNgnPrice(BRANCH_STAFF_OVERAGE_FEE_NGN, userCurrency).formattedLocal;
 
   const freeTier = PLAN_TIERS.free;
   const growthTier = PLAN_TIERS[growthTierKey];
@@ -29,39 +30,23 @@ export default function PricingPage() {
         <Header />
 
         <div className="max-w-[1920px] 2xl:max-w-[2400px] w-full mx-auto px-4 py-8 sm:py-16 xl:py-24 sm:px-6 lg:px-12 xl:px-16 2xl:px-20 space-y-10 sm:space-y-14 xl:space-y-20">
-          
-          {/* Page Banner Header */}
-          <div className="text-center space-y-3 sm:space-y-4 max-w-3xl xl:max-w-4xl 2xl:max-w-5xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 xl:px-4.5 xl:py-2 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 text-[10px] sm:text-xs xl:text-sm text-blue-700 dark:text-blue-300 shadow-2xs select-none backdrop-blur-xs">
+          {/* Merchant & Logistics Operations Tiers */}
+          <div className="space-y-8 xl:space-y-12">
+            <div className="text-center space-y-2 xl:space-y-3 max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto">
+                 <div className="inline-flex items-center gap-2 px-3.5 py-1.5 xl:px-4.5 xl:py-2 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 text-[10px] sm:text-xs xl:text-sm text-blue-700 dark:text-blue-300 shadow-2xs select-none backdrop-blur-xs">
               <span className="flex h-2 w-2 xl:h-2.5 xl:w-2.5 relative">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 xl:h-2.5 xl:w-2.5 bg-blue-600"></span>
               </span>
               <span className="font-bold tracking-tight">Transparent Pricing</span>
             </div>
-
             <h1 className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white font-display">
-              Simple, Predictable Plans for Growing Merchants
+                Dispatches, Receipts &amp; Multi-Branch Tiers
             </h1>
-
-            <p className="text-xs sm:text-base lg:text-lg xl:text-xl 2xl:text-2xl text-slate-600 dark:text-slate-400 leading-relaxed">
-              Unified dispatches &amp; receipts, branch management, and multi-user team roles with universal {convertNgnPrice(OVERAGE_FEE_NGN, userCurrency).formattedLocal} overage.
+            <p className="text-xs sm:text-sm lg:text-base xl:text-lg text-slate-600 dark:text-slate-400">
+              Unified operations counter for smart QR receipts and package dispatches. Includes branch management and team roles with {opsOverageFeeFormatted}/op and {branchStaffOverageFeeFormatted}/branch or rep universal overage.
             </p>
           </div>
-
-          {/* Merchant & Logistics Operations Tiers */}
-          <div className="space-y-8 xl:space-y-12">
-            <div className="text-center space-y-2 xl:space-y-3 max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto">
-              <span className="text-xs xl:text-sm font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-3 py-1 xl:px-4 xl:py-1.5 rounded-full border border-emerald-200 dark:border-emerald-800 inline-block">
-                Merchant Operations Plans
-              </span>
-              <h2 className="text-xl sm:text-3xl xl:text-4xl 2xl:text-5xl font-bold text-slate-900 dark:text-white font-display">
-                Dispatches, Receipts &amp; Multi-Branch Tiers
-              </h2>
-              <p className="text-xs sm:text-sm lg:text-base xl:text-lg text-slate-600 dark:text-slate-400">
-                Unified operations counter for smart QR receipts and package dispatches. Includes branch management and team roles with {overageFeeFormatted} universal overage.
-              </p>
-            </div>
 
             {/* Merchant Pricing Grid - 3 High-End Fintech Cards with Embedded Switchers */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 xl:gap-8 max-w-7xl lg:max-w-[1600px] 2xl:max-w-[2000px] mx-auto items-stretch">
@@ -254,7 +239,7 @@ export default function PricingPage() {
                           {growthTier.branches} {growthTier.branches === 1 ? "Branch location" : "Branch locations"}
                         </span>
                         <span className="block text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                          + {overageFeeFormatted} per extra branch
+                          + {branchStaffOverageFeeFormatted} per extra branch
                         </span>
                       </div>
                     </div>
@@ -280,7 +265,7 @@ export default function PricingPage() {
                           {growthTier.salesReps} Sales {growthTier.salesReps === 1 ? "rep" : "reps"}
                         </span>
                         <span className="block text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                          + {overageFeeFormatted} per extra rep
+                          + {branchStaffOverageFeeFormatted} per extra rep
                         </span>
                       </div>
                     </div>
@@ -291,7 +276,7 @@ export default function PricingPage() {
                       <div className="leading-tight">
                         <span className="font-semibold text-slate-900 dark:text-white">Universal Overage</span>
                         <span className="block text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                          Flat {overageFeeFormatted} / excess unit
+                          Flat {opsOverageFeeFormatted}/op · {branchStaffOverageFeeFormatted}/branch or rep
                         </span>
                       </div>
                     </div>
@@ -388,7 +373,7 @@ export default function PricingPage() {
                           {scaleTier.branches} Branch locations
                         </span>
                         <span className="block text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                          + {overageFeeFormatted} per extra branch
+                          + {branchStaffOverageFeeFormatted} per extra branch
                         </span>
                       </div>
                     </div>
@@ -414,7 +399,7 @@ export default function PricingPage() {
                           {scaleTier.salesReps} Sales reps
                         </span>
                         <span className="block text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                          + {overageFeeFormatted} per extra rep
+                          + {branchStaffOverageFeeFormatted} per extra rep
                         </span>
                       </div>
                     </div>
@@ -425,7 +410,7 @@ export default function PricingPage() {
                       <div className="leading-tight">
                         <span className="font-semibold text-slate-900 dark:text-white">Universal Overage</span>
                         <span className="block text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                          Flat {overageFeeFormatted} / excess unit
+                          Flat {opsOverageFeeFormatted}/op · {branchStaffOverageFeeFormatted}/branch or rep
                         </span>
                       </div>
                     </div>
@@ -456,7 +441,7 @@ export default function PricingPage() {
               </div>
               <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[11px] sm:text-xs xl:text-sm">
                 <span className="bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 font-semibold px-2 py-0.5 rounded-md border border-blue-200 dark:border-blue-800">
-                  Universal Overage: {overageFeeFormatted} / unit
+                  Universal Overage: {opsOverageFeeFormatted}/op · {branchStaffOverageFeeFormatted}/branch or rep
                 </span>
                 <span className="text-slate-300 dark:text-slate-700 hidden sm:inline">·</span>
                 <span>Automatic monthly billing</span>
@@ -471,11 +456,11 @@ export default function PricingPage() {
             <div className="flex items-start sm:items-center gap-2.5">
               <ShieldCheck className="w-5 h-5 xl:w-7 xl:h-7 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5 sm:mt-0" />
               <h2 className="text-base sm:text-xl xl:text-2xl 2xl:text-3xl font-bold font-display">
-                Universal {convertNgnPrice(OVERAGE_FEE_NGN, userCurrency).formattedLocal} &nbsp; Overage &amp; Predictable Monthly Billing
+                Universal {opsOverageFeeFormatted} Ops Overage &amp; Predictable Monthly Billing
               </h2>
             </div>
             <p className="text-xs sm:text-sm xl:text-base 2xl:text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-4xl xl:max-w-5xl">
-              Grow without unexpected barriers. Any operation or expansion beyond your tier quota—extra dispatches, extra digital receipts, extra branches, or additional sales reps—is billed at a flat <strong>{convertNgnPrice(OVERAGE_FEE_NGN, userCurrency).formattedLocal} per unit</strong>. Your full plan quota refreshes automatically at the start of each billing month.
+              Grow without unexpected barriers. Any operation or expansion beyond your tier quota—extra dispatches or digital receipts are billed at a flat <strong>{opsOverageFeeFormatted} per unit</strong>, and extra branches or sales reps at <strong>{branchStaffOverageFeeFormatted} each</strong>. Your full plan quota refreshes automatically at the start of each billing month.
             </p>
           </div>
 
@@ -492,14 +477,14 @@ export default function PricingPage() {
               <div className="space-y-2 xl:space-y-3">
                 <h4 className="font-bold text-slate-900 dark:text-white text-sm sm:text-base xl:text-lg">How do dispatches and receipts count toward my monthly quota?</h4>
                 <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                  Both logistics shipments and sales book receipts share a unified monthly operations counter. For example, on the Starter tier (500 Ops), you can create 300 receipts and 200 dispatches. Any excess is billed at {convertNgnPrice(OVERAGE_FEE_NGN, userCurrency).formattedLocal} per unit.
+                  Both logistics shipments and sales book receipts share a unified monthly operations counter. For example, on the Starter tier (500 Ops), you can create 300 receipts and 200 dispatches. Any excess is billed at {opsOverageFeeFormatted} per unit.
                 </p>
               </div>
 
               <div className="space-y-2 xl:space-y-3">
                 <h4 className="font-bold text-slate-900 dark:text-white text-sm sm:text-base xl:text-lg">How are extra branches and sales reps handled?</h4>
                 <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                  You can expand beyond your plan&apos;s base limits at any time. Extra branches and extra sales reps are billed at {convertNgnPrice(OVERAGE_FEE_NGN, userCurrency).formattedLocal} each, while strictly maintaining the rule of 1 manager per branch.
+                  You can expand beyond your plan&apos;s base limits at any time. Extra branches and extra sales reps are billed at {branchStaffOverageFeeFormatted} each, while strictly maintaining the rule of 1 manager per branch.
                 </p>
               </div>
 
